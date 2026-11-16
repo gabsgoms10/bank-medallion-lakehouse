@@ -1,0 +1,23 @@
+# ---------- secrets / credentials — NEVER commit ----------
+.env
+.env.*
+!.env.example
+.databrickscfg
+*.pem
+*.key
+
+# ---------- AI-workshop / process artifacts (local only) ----------
+docs/superpowers/
+grills/
+poc/
+
+# ---------- python ----------
+__pycache__/
+*.pyc
+
+# ---------- OS / IDE ----------
+Thumbs.db
+.DS_Store
+desktop.ini
+.idea/
+.vscode/

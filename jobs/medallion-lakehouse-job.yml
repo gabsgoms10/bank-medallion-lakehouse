@@ -1,0 +1,44 @@
+# Job: medallion-lakehouse
+#
+# Orchestration DAG — 5 tasks, sequential via depends_on.
+# Materialized in the workspace via the Jobs API (job_id: 140722924739703)
+# and reproducible from this definition.
+#
+#   setup_schemas -> generate_bronze -> build_silver -> build_gold -> quality_gate
+#
+# Notebook paths assume the sql/ files were imported as SQL notebooks under
+# /Shared/sql/ (email-free paths keep run history clean). Adjust notebook_path
+# to your actual workspace paths if you import elsewhere.
+
+resources:
+  jobs:
+    medallion_lakehouse:
+      name: medallion-lakehouse
+      tasks:
+        - task_key: setup_schemas
+          notebook_task:
+            notebook_path: /Shared/sql/00_setup.sql
+
+        - task_key: generate_bronze
+          notebook_task:
+            notebook_path: /Shared/sql/01_generate.sql
+          depends_on:
+            - task_key: setup_schemas
+
+        - task_key: build_silver
+          notebook_task:
+            notebook_path: /Shared/sql/02_silver.sql
+          depends_on:
+            - task_key: generate_bronze
+
+        - task_key: build_gold
+          notebook_task:
+            notebook_path: /Shared/sql/03_gold.sql
+          depends_on:
+            - task_key: build_silver
+
+        - task_key: quality_gate
+          notebook_task:
+            notebook_path: /Shared/sql/04_quality.sql
+          depends_on:
+            - task_key: build_gold
