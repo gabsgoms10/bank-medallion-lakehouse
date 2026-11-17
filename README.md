@@ -230,3 +230,7 @@ production version would change the *edges*, not the core:
 - Costs: `conversion_value` is an assumed revenue proxy per conversion, used
   to make ROI arithmetic concrete — it is a modeling choice, not a claim
   about real banking products.
+- GitHub's language bar can't represent this repo: Linguist classifies
+  `.sql` files as `data`, so the SQL (which *is* the project) never shows
+  up and the bar would read "100% Python" for a small helper script in
+  `tools/`. Python is marked non-detectable in `.gitattributes` instead.
